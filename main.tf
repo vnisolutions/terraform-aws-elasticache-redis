@@ -1,20 +1,20 @@
 resource "aws_elasticache_cluster" "elasticache-cluster" {
-  cluster_id           = "${var.env}-${var.project_name}-redis"
-  subnet_group_name    = aws_elasticache_subnet_group.elasticache-subnets.name
-  engine               = "redis"
-  node_type            = var.ec_node_type
-  num_cache_nodes      = var.cache_nodes_num
+  cluster_id               = "${var.env}-${var.project_name}-redis"
+  subnet_group_name        = aws_elasticache_subnet_group.elasticache-subnets.name
+  engine                   = "redis"
+  node_type                = var.ec_node_type
+  num_cache_nodes          = var.cache_nodes_num
   snapshot_retention_limit = var.snapshot_retention_limit
-  parameter_group_name = var.parameter_group_name
-  engine_version       = var.engine_version
-  port                 = 6379
-  security_group_ids   = aws_security_group.sg-elasticache[*].id
-  maintenance_window   = var.maintenance_window
+  parameter_group_name     = var.parameter_group_name
+  engine_version           = var.engine_version
+  port                     = 6379
+  security_group_ids       = aws_security_group.sg-elasticache[*].id
+  maintenance_window       = var.maintenance_window
 
   tags = {
-      Name  = "${var.env}-${var.project_name}-redis"
-      Environment = "${var.env}"
-      Management  = "terraform"
+    Name        = "${var.env}-${var.project_name}-redis"
+    Environment = "${var.env}"
+    Management  = "terraform"
   }
 }
 
@@ -39,7 +39,7 @@ resource "aws_security_group" "sg-elasticache" {
       prefix_list_ids  = null
       security_groups  = var.sg_ingress
       self             = null
-    }  
+    }
   ]
 
   egress = [
@@ -58,8 +58,8 @@ resource "aws_security_group" "sg-elasticache" {
   ]
 
   tags = {
-      Name        = "${var.env}-${var.project_name}-elasticache-sg"
-      Environment = "${var.env}"
-      Management  = "terraform"
+    Name        = "${var.env}-${var.project_name}-elasticache-sg"
+    Environment = "${var.env}"
+    Management  = "terraform"
   }
 }
